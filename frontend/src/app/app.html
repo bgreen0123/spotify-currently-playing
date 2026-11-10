@@ -1,17 +1,77 @@
-<h1>Currently Playing Song</h1>
+<main class="now-playing">
+  <header class="top-bar">
+    <div class="brand">
+      <span class="spotify-mark">●</span>
+      <span>NOW PLAYING</span>
+    </div>
 
-@if (currentTrack()?.track; as track) {
-  <p>{{ track.title }}</p>
-  <p>{{ track.album }}</p>
-  <p>{{ track.artist }}</p>
+    <div class="connection-status">
+      <span class="status-dot"></span>
+      SPOTIFY
+    </div>
+  </header>
 
-  @if (track.albumArtUrl; as art) {
-    <img [src]="art" [alt]="track.album" width="300" />
+  @if (currentTrack()?.track; as track) {
+    <section class="track-content">
+      <div class="album-art-container">
+        @if (track.albumArtUrl; as art) {
+          <img class="album-art" [src]="art" [alt]="track.album + ' album artwork'" />
+        } @else {
+          <div class="album-art-placeholder">♪</div>
+        }
+      </div>
+
+      <div class="track-details">
+        <p class="eyebrow">CURRENT TRACK</p>
+
+        <h1 class="track-title">{{ track.title }}</h1>
+        <p class="track-artist">{{ track.artist }}</p>
+        <p class="track-album">{{ track.album }}</p>
+
+        <div class="playback-status">
+          <span class="playback-icon">
+            @if (currentTrack()?.isPlaying) {
+              <span class="equalizer">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            } @else {
+              <span class="paused-icon">Ⅱ</span>
+            }
+          </span>
+
+          <span>
+            {{ currentTrack()?.isPlaying ? 'NOW PLAYING' : 'PAUSED' }}
+          </span>
+        </div>
+        <div class="progress-container">
+          <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="progressPercentage()"></div>
+          </div>
+
+          <div class="progress-time">
+            <span>{{ formatTime(progressMs()) }}</span>
+            <span>-{{ formatTime(timeLeftMs()) }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  } @else {
+    <section class="empty-state">
+      <div class="empty-icon">♫</div>
+      <h1>Nothing playing</h1>
+      <p>Start playing something on Spotify</p>
+    </section>
   }
-} @else {
-  <p>Nothing is playing right now</p>
-}
 
-@if (errorMessage()) {
-  <p>{{ errorMessage() }}</p>
-}
+  @if (errorMessage()) {
+    <p class="error-message">{{ errorMessage() }}</p>
+  }
+
+  <footer class="bottom-bar">
+    <span>SPOTIFY DISPLAY</span>
+    <span>LIVE PLAYBACK</span>
+  </footer>
+</main>

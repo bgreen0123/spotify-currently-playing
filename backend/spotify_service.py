@@ -35,6 +35,7 @@ def get_current_playing():
 
     return {
         "isPlaying": current_track["is_playing"],
+        "progress_ms": current_track["progress_ms"],
         "track": {
             "id": track["id"],
             "title": track["name"],
