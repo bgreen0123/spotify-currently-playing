@@ -29,22 +29,17 @@
         <p class="track-album">{{ track.album }}</p>
 
         <div class="playback-status">
-          <span class="playback-icon">
-            @if (currentTrack()?.isPlaying) {
-              <span class="equalizer">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </span>
-            } @else {
-              <span class="paused-icon">Ⅱ</span>
-            }
-          </span>
-
-          <span>
-            {{ currentTrack()?.isPlaying ? 'NOW PLAYING' : 'PAUSED' }}
-          </span>
+          @if (currentTrack()?.isPlaying) {
+            <span class="equalizer">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+            <span>NOW PLAYING</span>
+          } @else {
+            <span> PAUSED </span>
+          }
         </div>
         <div class="progress-container">
           <div class="progress-track">
@@ -54,6 +49,11 @@
           <div class="progress-time">
             <span>{{ formatTime(progressMs()) }}</span>
             <span>-{{ formatTime(timeLeftMs()) }}</span>
+          </div>
+        </div>
+        <div class="pause-play-container">
+          <div class="pause-play-circle" [class.is-playing]="currentTrack()?.isPlaying">
+            <span class="pause-play-icon"></span>
           </div>
         </div>
       </div>

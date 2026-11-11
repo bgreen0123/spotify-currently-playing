@@ -152,6 +152,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  height: 20px;
 
   margin-top: clamp(24px, 5vh, 48px);
 
@@ -159,15 +160,6 @@
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 2px;
-}
-
-.playback-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 28px;
-  height: 28px;
 }
 
 .equalizer {
@@ -202,11 +194,6 @@
 .equalizer span:nth-child(4) {
   height: 6px;
   animation-delay: 0.2s;
-}
-
-.paused-icon {
-  color: #8a8c94;
-  font-size: 1.2rem;
 }
 
 .empty-state {
@@ -290,13 +277,12 @@
   transform: translateY(-50%);
   width: 12px;
   height: 12px;
-  background: #ffffff;
+  background: white;
   border-radius: 50%;
 }
 
-.progress-mark {
-  color: white;
-  font-size: 1.5rem;
+.progress-fill[style*='100%']::after {
+  display: none;
 }
 
 .progress-time {
@@ -306,6 +292,65 @@
   color: #a7a7a7;
   font-size: 12px;
   font-variant-numeric: tabular-nums;
+}
+
+.pause-play-container {
+  display: flex;
+  justify-content: center;
+}
+
+.pause-play-circle {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Base icon container */
+.pause-play-icon {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 24px;
+}
+
+/* Play State (Triangle) */
+.pause-play-icon::before {
+  content: '';
+  position: absolute;
+  left: 3px; /* Slight offset for optical centering */
+  top: 0;
+  border-style: solid;
+  border-width: 12px 0 12px 20px;
+  border-color: transparent transparent transparent black;
+}
+
+.pause-play-icon::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0;
+  height: 24px;
+  background-color: black;
+}
+
+/* Pause State (Two Vertical Bars) */
+.pause-play-circle.is-playing .pause-play-icon::before {
+  left: 2px;
+  width: 6px;
+  height: 24px;
+  border-width: 0;
+  background-color: black;
+}
+
+.pause-play-circle.is-playing .pause-play-icon::after {
+  right: 2px;
+  width: 6px;
 }
 
 @media (max-width: 600px) {
